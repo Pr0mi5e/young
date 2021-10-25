@@ -1,6 +1,5 @@
-export const dateFormat = (fmt, timestamp) => {
-  const date = new Date(timestamp);
-  let ret;
+export const dateFormat = (timestamp, fmt = 'yyyy-MM-dd hh:mm:ss') => {
+  const date = timestamp ? new Date(timestamp) : new Date();
   const opt = {
     'y+': date.getFullYear().toString(),
     'M+': (date.getMonth() + 1).toString(),
@@ -9,11 +8,12 @@ export const dateFormat = (fmt, timestamp) => {
     'm+': date.getMinutes().toString(),
     's+': date.getSeconds().toString()
   };
-  for (const k in opt) {
-    ret = new RegExp('(' + k + ')').exec(fmt);
-    if (ret) {
-      fmt = fmt.replace(ret[1], (ret[1].length === 1) ? (opt[k]) : (opt[k].padStart(ret[1].length, '0')));
-    }
-  }
+  Object.keys(opt).forEach(key => {
+    fmt = fmt.replace(new RegExp(key), (value) => {
+      return value.length < opt[key].length
+        ? opt[key]
+        : opt[key].padStart(value.length, '0');
+    });
+  });
   return fmt;
 };
