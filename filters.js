@@ -18,7 +18,7 @@ export const dateFilter = (timestamp, fmt = 'yyyy-MM-dd hh:mm:ss') => {
   return fmt;
 };
 
-export const secondFilter = (time, fmt = 'dd天hh时mm分ss秒', noZero = false) => {
+export const durationFilter = (time, fmt = 'dd天hh时mm分ss秒', noZero = false) => {
   const d = Math.floor(time / (60 * 60 * 24));
   if (new RegExp('d+').test(fmt)) time -= d * 60 * 60 * 24;
   const h = Math.floor(time / (60 * 60));
